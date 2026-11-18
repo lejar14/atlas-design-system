@@ -1,0 +1,249 @@
+# @asyst/atlas
+
+> Atlas Design System — React components and design tokens by Asyst. Version 0.2.0. React + Tailwind CSS v4 components styled with Atlas design tokens (CSS variables).
+
+## Setup
+
+- Install: `npm install github:androsap/atlas-design-system#semver:^0.2.0` (peer deps: react, react-dom, tailwindcss v4). Import name stays `@asyst/atlas`.
+- CSS (before Tailwind): `@import "@asyst/atlas/tokens.css";` then `@import "tailwindcss";`
+- Let Tailwind scan the components: `@source "../node_modules/@asyst/atlas/dist";`
+- Import: `import { Button } from "@asyst/atlas"`
+- Dark mode: set `data-theme="dark"` on <html>.
+- Icon props take a lucide-react component, e.g. `leadingIcon={Plus}`.
+
+## Components
+
+### Alert
+Props:
+- color?: "neutral" | "info" | "success" | "warning" | "danger" (default "neutral")
+- layout?: "stacked" | "inline" (default "stacked") — "stacked" (default): the action sits below the description — room to breathe for a notice living inline in the page.
+- icon?: LucideIcon
+- title: string
+- children?: ReactNode
+- actionLabel?: string
+- onAction?: () => void
+- onDismiss?: () => void
+- dismissible?: boolean (default true)
+- className?: string
+Example: `<Alert title="..." color="info" layout="inline">Label</Alert>`
+
+### Badge
+Props:
+- color?: "neutral" | "primary" | "secondary" | "info" | "success" | "warning" | "danger" (default "neutral")
+- variant?: "fill" | "outline" | "light" (default "fill")
+- size?: "sm" | "md" | "lg" (default "md")
+- leadingIcon?: LucideIcon
+- trailingIcon?: LucideIcon
+- dot?: boolean (default false) — Renders as a small colored dot instead of a label — a minimal presence/unread indicator, no text.
+- children?: ReactNode
+- className?: string
+Example: `<Badge color="primary" variant="outline">Label</Badge>`
+
+### Breadcrumbs
+Props:
+- items: BreadcrumbItem[]
+- className?: string
+- linkComponent?: ElementType (default "a") — Component used to render linked crumbs.
+Example: `<Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Settings" }]} />`
+
+### Button
+Props:
+- color?: "brand" | "neutral" | "danger" | "warning" | "success" (default "brand")
+- variant?: "primary" | "secondary" | "tertiary" (default "primary")
+- size?: "sm" | "md" | "lg" (default "md")
+- leadingIcon?: LucideIcon
+- trailingIcon?: LucideIcon
+Also accepts: native HTML/React attributes.
+Example: `<Button color="neutral" variant="secondary">Label</Button>`
+
+### Calendar
+Props:
+- month: Date — Any date within the month to display — only year/month are read.
+- today?: Date (default new Date())
+- selected?: Date | null (default null)
+- rangeStart?: Date | null (default null)
+- rangeEnd?: Date | null (default null)
+- onSelectDate?: (date: Date) => void
+- showPrev?: boolean (default true)
+- showNext?: boolean (default true)
+- onPrev?: () => void
+- onNext?: () => void
+- className?: string
+Example: `<Calendar month={new Date()} />`
+
+### Checkbox
+Props:
+- color?: "primary" | "danger" | "neutral" (default "primary")
+- size?: "sm" | "md" (default "md")
+- label?: string
+- helperText?: string
+- indeterminate?: boolean (default false) — Visual "some but not all" state — sets the real DOM .indeterminate property (there's no HTML attribute for it) via a ref effect.
+- focused?: boolean (default false) — Force the focused visual state, independent of real DOM focus.
+Also accepts: native HTML/React attributes.
+Example: `<Checkbox label="Label" color="danger" size="sm" />`
+
+### Chip
+Props:
+- color?: "neutral" | "primary" | "success" | "warning" | "danger" (default "neutral")
+- variant?: "fill" | "outline" (default "fill")
+- size?: "sm" | "md" | "lg" (default "md")
+- selected?: boolean
+- defaultSelected?: boolean (default false)
+- onSelectedChange?: (selected: boolean) => void
+- leadingIcon?: LucideIcon
+- trailingIcon?: LucideIcon
+- onRemove?: () => void — Renders a real, independently-clickable remove button in the trailing slot instead of trailingIcon — the classic removable-tag use case.
+- focused?: boolean (default false) — Docs-only: force the focus-visible ring without real keyboard focus.
+Also accepts: native HTML/React attributes.
+Example: `<Chip color="primary" variant="outline">Label</Chip>`
+
+### DatePicker
+Props:
+- value?: Date | null
+- defaultValue?: Date | null (default null)
+- onChange?: (date: Date) => void
+- placeholder?: string (default "Select a date")
+- disabled?: boolean (default false)
+- className?: string
+Example: `<DatePicker />`
+
+### DateRangePicker
+Props:
+- value?: DateRange
+- defaultValue?: DateRange (default EMPTY_RANGE)
+- onChange?: (range: DateRange) => void
+- disabled?: boolean (default false)
+- className?: string
+Example: `<DateRangePicker />`
+
+### DropdownMenu
+Also accepts: Radix primitive props.
+Example: `<DropdownMenu><DropdownMenuTrigger asChild><Button>Open</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>Edit</DropdownMenuItem></DropdownMenuContent></DropdownMenu>`
+
+### DropdownMenuContent
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<DropdownMenuContent>Label</DropdownMenuContent>`
+
+### DropdownMenuItem
+Props:
+- variant?: "default" | "danger" (default "default")
+- active?: boolean (default false) — Visually marks this as the currently active/selected item.
+- forceHighlighted?: boolean (default false) — Docs-only: force the hover/highlighted look without real pointer interaction, for a static side-by-side state comparison.
+- leadingIcon?: LucideIcon
+- trailingIcon?: LucideIcon
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<DropdownMenuItem variant="danger">Label</DropdownMenuItem>`
+
+### DropdownMenuLabel
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<DropdownMenuLabel>Label</DropdownMenuLabel>`
+
+### DropdownMenuSeparator
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<DropdownMenuSeparator />`
+
+### DropdownMenuTrigger
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<DropdownMenuTrigger asChild><Button>Open</Button></DropdownMenuTrigger>`
+
+### Input
+Props:
+- size?: "sm" | "md" | "lg" (default "md")
+- label?: string
+- helperText?: string
+- error?: boolean (default false)
+- focused?: boolean (default false) — Force the focused visual state, independent of real DOM focus — for compound fields where an adjacent control should visually "own" this input's focus ring.
+- leadingIcon?: LucideIcon
+- trailingIcon?: LucideIcon
+Also accepts: native HTML/React attributes.
+Example: `<Input label="Label" size="sm" />`
+
+### Progress
+Props:
+- value: number — 0–100.
+- color?: "neutral" | "info" | "danger" (default "neutral")
+- layout?: "stacked" | "inline" (default "stacked") — "stacked" (default): label/percentage sit above a full-width bar.
+- label?: string
+- helperText?: string
+- showValue?: boolean (default true)
+- className?: string
+Example: `<Progress label="Label" value={0} color="info" layout="inline" />`
+
+### RadioButton
+Props:
+- color?: "primary" | "danger" | "neutral" (default "primary")
+- size?: "sm" | "md" (default "md")
+- label?: string
+- helperText?: string
+- focused?: boolean (default false) — Force the focused visual state, independent of real DOM focus.
+Also accepts: native HTML/React attributes.
+Example: `<RadioButton label="Label" color="danger" size="sm" />`
+
+### Spinner
+Props:
+- color?: "neutral" | "info" | "danger" (default "neutral")
+- size?: "xs" | "sm" | "md" | "lg" | "xl" (default "md")
+- label?: string (default "Loading") — Accessible name — what's actually loading.
+- className?: string
+Example: `<Spinner label="Label" color="info" size="xs" />`
+
+### Switch
+Props:
+- color?: "neutral" | "primary" | "status" (default "neutral")
+- size?: "sm" | "md" (default "md")
+- label?: string
+- helperText?: string
+- focused?: boolean (default false) — Docs-only: force the focus-visible ring without real keyboard focus.
+Also accepts: native HTML/React attributes.
+Example: `<Switch label="Label" color="primary" size="sm" />`
+
+### Textarea
+Props:
+- label?: string
+- helperText?: string
+- error?: boolean (default false)
+- focused?: boolean (default false) — Force the focused visual state, independent of real DOM focus.
+- trailingIcon?: LucideIcon
+Also accepts: native HTML/React attributes.
+Example: `<Textarea label="Label" />`
+
+### Toaster
+Props:
+- children: ReactNode
+Example: `<Toaster><App /></Toaster>  // then: const toast = useToast(); toast({ title: "Saved", color: "success" })`
+
+### Tooltip
+Also accepts: Radix primitive props.
+Example: `<TooltipProvider><Tooltip><TooltipTrigger asChild><Button>Hover</Button></TooltipTrigger><TooltipContent>Hint</TooltipContent></Tooltip></TooltipProvider>`
+
+### TooltipContent
+Props:
+- variant?: "dark" | "light" (default "dark")
+- icon?: LucideIcon
+- title?: string
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<TooltipContent variant="light">Hint</TooltipContent>`
+
+### TooltipProvider
+Also accepts: Radix primitive props.
+Example: `<TooltipProvider delayDuration={200}>{app}</TooltipProvider>`
+
+### TooltipTrigger
+Also accepts: native HTML/React attributes, Radix primitive props.
+Example: `<TooltipTrigger asChild><Button>Hover</Button></TooltipTrigger>`
+
+### Uploader
+Props:
+- maxSizeBytes?: number (default 1024 * 1024) — Defaults to 1 MB, matching the spec.
+- accept?: string
+- multiple?: boolean (default true)
+- disabled?: boolean (default false)
+- forceActive?: boolean (default false) — Docs-only: force the drag-active look without a real drag.
+- className?: string
+Example: `<Uploader />`
+
+## Utilities
+
+- buttonClasses({ color, variant, size }) — Button's class string, for styling links as buttons.
+- useToast() — returns toast(options: ToastOptions); call inside <Toaster>.
+- cn(...classes) — merge class names (clsx + tailwind-merge).
