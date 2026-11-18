@@ -1,6 +1,6 @@
 {
   "name": "@asyst/atlas",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Atlas Design System — React components and design tokens by Asyst.",
   "license": "UNLICENSED",
   "private": true,
